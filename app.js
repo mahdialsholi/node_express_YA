@@ -8,6 +8,7 @@ const Joi = require("joi");
 app.set("view engine", "ejs");// set the view engine to ejs 
 app.use(cors()); // Use this after the variable declaration
 app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded 
 const { connectDB } = require("./config/db");
 
 connectDB(); // connect to the database
