@@ -5,8 +5,16 @@ const port = process.env.PORT || 3000;
 const cors = require("cors");
 const logger = require("./middlewares/logger");
 const Joi = require("joi");
+
+const helmet = require("helmet"); // for security headers
+app.use(helmet()); // Use this after the variable declaration
+
 app.set("view engine", "ejs"); // set the view engine to ejs
-app.use(cors()); // Use this after the variable declaration
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+); // Use this after the variable declaration
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 const { connectDB } = require("./config/db");
