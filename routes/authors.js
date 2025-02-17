@@ -3,7 +3,7 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler"); // handle async errors
 const Joi = require("joi");
 const AuthorModel = require("../models/Author");
-const {verifyTokenAndAdmin} = require('../middlewares/verifyToken')
+const { verifyTokenAndAdmin } = require("../middlewares/verifyToken");
 
 /*
  * @desc Get all authors
@@ -19,7 +19,11 @@ router.get(
     // const authors = await AuthorModel.find().sort({ firstName: 1 });   // sort by firstName in descending order
     // const authors = await AuthorModel.find().sort({ firstName: 1 }).select("firstName lastName");   // sort by firstName in descending order and select only firstName and lastName
     // const authors = await AuthorModel.find().sort({ firstName: 1 }).select("firstName lastName -_id");   // sort by firstName in descending order and select only firstName and lastName and exclude _id
-    const authors = await AuthorModel.find();
+    const { pageNumber } = req.query;
+    const authorsPerPage = 2;
+    const authors = await AuthorModel.find()
+      .skip((pageNumber - 1) * authorsPerPage)
+      .limit(authorsPerPage); // skip the first 2 authors and return the next 2 authors
     res.status(200).json({ authors, count: authors.length });
     // no need to return here, because we are using asyncHandler
   })

@@ -29,7 +29,7 @@ const bookSchema = new Schema(
     cover: {
       type: String,
       required: true,
-      enum: ["soft", "hard"],
+      enum: ["soft cover", "hard cover"],
       trim: true,
     },
   },
