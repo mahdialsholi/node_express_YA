@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const cors = require("cors");
 const logger = require("./middlewares/logger");
 const Joi = require("joi");
+app.set("view engine", "ejs");// set the view engine to ejs 
 app.use(cors()); // Use this after the variable declaration
 app.use(express.json()); // for parsing application/json
 const { connectDB } = require("./config/db");
@@ -12,6 +13,7 @@ const { connectDB } = require("./config/db");
 connectDB(); // connect to the database
 
 app.use(logger); // middleware
+ 
 
 const { notFound, errorHandler } = require("./middlewares/errors");
 
@@ -19,6 +21,7 @@ app.use("/api/books", require("./routes/books")); // note app.use is used to use
 app.use("/api/authors", require("./routes/authors"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
+app.use("/password", require("./routes/password"));
 
 // not found middleware
 app.use(notFound);
